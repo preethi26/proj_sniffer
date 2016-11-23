@@ -1,0 +1,6 @@
+{{extend 'layout.html'}}
+<h1>This is the default/start.html template</h1>
+<button onkeyup="ajax('{{=URL('default', 'stop')}}', [], ':eval')">
+    stop
+</button>
+{{=BEAUTIFY(response._vars)}}

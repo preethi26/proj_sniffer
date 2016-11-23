@@ -1,0 +1,5 @@
+{{extend 'layout.html'}}
+
+{{=form}}
+
+<a href={{=URL('default','start',vars=dict(value = interf))}}> <button style="margin-right:50px;margin-bottom:20px;width:110px;height:50px;font-size:20px"> sniff </button></a>

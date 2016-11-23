@@ -1,0 +1,2 @@
+# -*- coding: utf-8 -*-
+db.define_table('stopFlag',Field('flagVal', 'integer', default=0))
