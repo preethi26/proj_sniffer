@@ -1,0 +1,6 @@
+{{extend 'layout.html'}}
+
+{{=form}}
+<button onclick="ajax('{{=URL('default', 'stop')}}', [], ':eval')">
+    stop
+</button>

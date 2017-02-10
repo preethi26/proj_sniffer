@@ -1,0 +1,91 @@
+<html>
+  <head>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+ <script type="text/javascript">
+     google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawLineColors);
+
+      var data;
+function drawLineColors() {
+    if (typeof(data) == "undefined") {
+        data = new google.visualization.DataTable();
+    }
+      data.addColumn('number', 'X');
+      data.addColumn('number', 'tcp');
+      data.addColumn('number', 'udp');
+      data.addColumn('number', 'icmp');
+}
+     function draw(updated_data){
+         
+         
+        n = data.getNumberOfRows();
+        if (n>5){ l=5 }
+         else if(n >1) { l=1 }
+         else {l=0}
+        data.removeRows(0,l);
+data.addRows(updated_data);
+         console.log(updated_data.length)
+         
+         
+         
+      var options = {
+        hAxis: {
+          title: 'Time'
+        },
+        vAxis: {
+          title: 'No of packets'
+        },
+        colors: ['#DF2992', '#4CF511', '#24298E']
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+     
+function putdata(updated_data) {
+    updated_data = JSON.parse(updated_data);
+    console.log(updated_data);
+    draw(updated_data);
+   
+}
+     
+function startPolling() {
+   
+    id = setInterval(update, 20);
+}
+     
+function update(){
+    poll_xhr = $.ajax({
+                url:  'getdata',
+                type: 'POST',
+                data: {
+                },
+                success: function(result) {
+                    
+                    console.log("hi")
+                    //console.log(result)
+                    if (result) {
+                        //console.log(result)
+                        putdata(result)
+                    }
+                }
+            });
+}
+ //    drawLineColors();
+     startPolling();
+      
+     
+ </script>
+
+      </head>
+  <body>
+     
+  <div id="chart_div" style = "margin-top : 150px"></div>
+      
+
+      </body>
+</html>
